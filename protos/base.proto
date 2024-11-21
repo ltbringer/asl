@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package base;
+
+
+message UUID {
+  string value = 1;
+}
+
+message CountryCode {
+  string code = 1;
+}
+
+message OneTimePassword {
+  string code = 1;
+}
+
+enum StatusCode {
+  SUCCESS = 0;
+  FAILURE = 1;
+}
+
+message ResponseStatus {
+  StatusCode code = 1;
+  string message = 2;
+}
+
+message Vector {
+  repeated double values = 1;
+}
+
+message Embedding {
+  repeated Vector values = 1;
+}
+
+message Birthday {
+  uint32 day = 1;
+  uint32 month = 2;
+}
