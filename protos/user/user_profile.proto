@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package user;
+
+import "protos/base.proto";
+import "protos/user/user_auth.proto";
+
+message GetProfileRequest {
+  base.UUID id = 1;
+}
+
+message CreateProfileRequest {
+  user.UserAuth auth = 1;
+  User user = 2;
+}
+
+message Persona {
+  optional string gender = 1;
+  optional string education = 3;
+  optional string career = 4;
+  repeated string passions = 5;
+  optional string myersBriggsType = 6;
+  base.CountryCode country = 7;
+  optional string city = 8;
+}
+
+message User {
+  string name = 1;
+  optional Persona persona = 2;
+  base.Birthday birthday = 3;
+  bool isBot = 4;
+}
+
+message PersistedUser {
+  base.UUID id = 1;
+}
+
+service UserProfile {
+  rpc CreateProfile (CreateProfileRequest) returns (PersistedUser);
+  rpc GetProfile (GetProfileRequest) returns (PersistedUser);
+}

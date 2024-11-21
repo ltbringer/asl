@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package user;
+
+import "protos/base.proto";
+import "protos/user/bot.proto";
+
+message UserAuth {
+  string contact = 1;
+  base.CountryCode code = 2;
+}
+
+message OtpRequest {
+  UserAuth auth = 1;
+}
+
+message OtpResponse {
+  base.ResponseStatus status = 1;
+  string value = 2;
+}
+
+message AuthRequest {
+  UserAuth auth = 1;
+  base.OneTimePassword otp = 2;
+}
+
+message AuthResponse {
+  base.ResponseStatus status = 1;
+  string token = 2;
+}
+
+service UserProfileService {
+  rpc GetOtp (OtpRequest) returns (OtpResponse);
+  rpc GetAuthToken (AuthRequest) returns (AuthResponse);
+}

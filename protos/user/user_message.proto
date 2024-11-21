@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package user;
+
+import "protos/base.proto";
+
+enum VisibilityModes {
+  PUBLIC = 0;
+  PRIVATE = 1;
+}
+
+message MessageSendRequest {
+  AuthoredMessage message = 1;
+  string authToken = 2;
+  string clientIsoTs = 3;
+}
+
+message MessageUpdateRequest {
+  string messageId = 1;
+  AuthoredMessage message = 2;
+  string authToken = 3;
+  string clientIsoTs = 4;
+}
+
+message MessageSendResponse {
+  base.ResponseStatus status = 1;
+}
+
+message MessageReadRequest {
+  string channelId = 1;
+  string authToken = 2;
+  optional string senderId = 3;
+}
+
+message PrivacySettings {
+  optional uint32 delete_s = 1;
+  bool isDeleted = 2;
+  repeated string allowList = 3;
+  VisibilityModes privacy = 4;
+  uint32 openLimit = 5;
+}
+
+message AuthoredMessage {
+  string channelId = 2;
+  string authorId = 3;
+  string content = 4;
+  PrivacySettings privacy = 5;
+}
+
+message PersistedMessage {
+  optional string id = 1;
+  AuthoredMessage message = 2;
+  string createdIsoTs = 3;
+  string updatedIsoTs = 4;
+  uint32 edits = 5;
+}
+
+message MessageReadResponse {
+  optional string next = 1;
+  optional string prev = 2;
+  repeated PersistedMessage messages = 3;
+}
+
+service UserMessageService {
+  rpc send (MessageSendRequest) returns (MessageSendResponse);
+  rpc read (MessageReadRequest) returns (MessageReadResponse);
+  rpc update (MessageUpdateRequest) returns (MessageSendResponse);
+}
