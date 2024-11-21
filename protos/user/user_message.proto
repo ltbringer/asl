@@ -41,10 +41,10 @@ message PrivacySettings {
 }
 
 message AuthoredMessage {
-  string channelId = 2;
-  string authorId = 3;
-  string content = 4;
-  PrivacySettings privacy = 5;
+  string channelId = 1;
+  string authorId = 2;
+  string content = 3;
+  PrivacySettings privacy = 4;
 }
 
 message PersistedMessage {
