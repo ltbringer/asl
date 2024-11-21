@@ -53,6 +53,9 @@ message PersistedMessage {
   string createdIsoTs = 3;
   string updatedIsoTs = 4;
   uint32 edits = 5;
+  uint32 views = 6;
+  map<string, uint32> reactions = 7;
+  optional string parentId = 8;
 }
 
 message MessageReadResponse {
